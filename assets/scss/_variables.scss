@@ -1,0 +1,73 @@
+$fontSize: 16px;
+$fontSizeXl: 0.8333vw;
+$font-family: 'Montserrat', sans-serif;
+
+$grid-columns: 12;
+$grid-gutter: 0.625rem;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+$primary: #0061D9;
+$primary-900: #0E41BA;
+$primary-800: #0061D9;
+$primary-700: #0073EB;
+$primary-600: #0086FF;
+$primary-500: #0095FF;
+$primary-400: #22A5FF;
+$primary-300: #55B5FF;
+$primary-200: #8ACAFF;
+$primary-100: #B9DEFF;
+$primary-50: #E2F2FF;
+
+$acc: #FF0A0A;
+$acc-900: #B40000;
+$acc-800: #FF0A0A;
+$acc-700: #FF2020;
+$acc-600: #FF3D3E;
+$acc-500: #FC5254;
+$acc-400: #FB696C;
+$acc-300: #F8999C;
+$acc-200: #F7B1B5;
+$acc-100: #F6C8CD;
+$acc-50: #F5E1E6;
+
+$gray-900: #000;
+$gray-800: #333;
+$gray-400: #76767A;
+$gray-300: #A7A8AB;
+$gray-200: #D9D9DE;
+$gray-100: #E5E5EB;
+$gray-50: #F5F5F7;
+
+$light: #fff;
+$dark: #090E36;
+$secondary: #354554;
+$bg-light: #F4F8FE;
+$bg-dark: #050C44;
+
+$containerWidth: 81.875rem;
+$containerOffset: 1.25rem;
+$headerHeight: 5.375rem;
+$headerBottomOffset: 2.5rem;
+
+$buttonHeight: 3.625rem;
+$buttonHeightS: 3.125rem;
+$buttonHeightXs: 2.625rem;
+$buttonContentGap: 0.5rem;
+
+$fieldHeight: $buttonHeight;
+$fieldBorderRadius: 0.75rem;
+
+$cardRadius: 0.625rem;
+$cardBg: $light;
+$cardPaddingTopBottom: 0.625rem;
+$cardPaddingRightLeft: 1rem;
+$cardGap: 0.3125rem;
+$cardFontSize: 1.125rem;
+$cardFontWeight: 700;

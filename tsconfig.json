@@ -1,0 +1,7 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "moduleResolution": "node",
+  "module": "commonjs",
+  "typeRoots" : ["node_modules/@types", "node_modules/@types/axios/index.d.ts"]
+}

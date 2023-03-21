@@ -1,0 +1,39 @@
+@use "sass:math";
+
+@mixin col($col: $grid-columns, $noGutters: false) {
+  width: math.div(100%, $grid-columns) * $col;
+  @if $noGutters {
+  } @else {
+    padding: math.div($grid-gutter, 2);
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: math.div(-$grid-gutter, 2);
+}
+
+.col {
+  @include col($grid-columns);
+}
+
+@for $i from 1 to $grid-columns {
+  .col-#{$i} {
+    @include col($i)
+  }
+}
+
+.row {
+  &.no-gutters {
+    margin: 0;
+    .col {
+      padding: 0;
+    }
+    @for $i from 1 to $grid-columns {
+      .col-#{$i} {
+        padding: 0;
+      }
+    }
+  }
+}
