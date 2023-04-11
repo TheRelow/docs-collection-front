@@ -15,12 +15,12 @@ export default {
   },
   computed: {
     classes() {
-      let classList = ['col']
-      if (this.cols !== 12) {
-        classList.push(`col-${this.cols}`)
+      let classList = ["col"];
+      if (+this.cols !== 12) {
+        classList.push(`col-${this.cols}`);
       }
-      return classList
+      return classList;
     },
-  }
-}
+  },
+};
 </script>

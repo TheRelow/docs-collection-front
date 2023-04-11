@@ -1,18 +1,22 @@
 <script lang="ts">
-import {defineComponent, h} from 'vue';
-import {NuxtLink} from "#components";
-import { DefineComponent } from 'nuxt/dist/app/compat/capi';
+import { defineComponent, h } from "vue";
+import { NuxtLink } from "#components";
+import { DefineComponent } from "nuxt/dist/app/compat/capi";
 
 export default defineComponent({
   name: "BaseButton",
   props: {
     size: {
       type: String,
-      default: 'm',
+      default: "m",
+      validator: (value: string) =>
+        ["xs", "s", "m", "l", "xxl"].includes(value),
     },
     type: {
       type: String,
-      default: 'primary',
+      default: "primary",
+      validator: (value: string) =>
+        ["primary", "secondary", "tertiary"].includes(value),
     },
     rounding: {
       type: [Boolean, String],
@@ -20,68 +24,82 @@ export default defineComponent({
     },
     tag: {
       type: String,
-      default: 'button',
+      default: "button",
+      validator: (value: string) =>
+        [
+          "button",
+          "nuxt-link",
+          "NuxtLink",
+          "a",
+          "router-link",
+          "RouterLink",
+        ].includes(value),
     },
     color: {
       type: String,
-      default: 'default'
+      default: "default",
+      validator: (value: string) => ["default", "acc"].includes(value),
     },
   },
   computed: {
     classes(): string[] {
-      let classList = [this.$style.button]
-      
-      if (this.color !== 'default') {
-        classList.push(this.$style[`button_color_${this.color}`])
+      let classList = [this.$style.button];
+
+      if (this.color !== "default") {
+        classList.push(this.$style[`button_color_${this.color}`]);
       }
-      if (this.size !== 'm') {
-        classList.push(this.$style[`button_size_${this.size}`])
+      if (this.size !== "m") {
+        classList.push(this.$style[`button_size_${this.size}`]);
       }
-      if (this.type !== 'primary') {
-        classList.push(this.$style[`button_type_${this.type}`])
+      if (this.type !== "primary") {
+        classList.push(this.$style[`button_type_${this.type}`]);
       }
       if (this.rounding !== false) {
-        classList.push(this.$style[`button_rounding`])
-        if (typeof this.rounding === 'string') {
-          classList.push(this.$style[`button_rounding_${this.rounding}`])
+        classList.push(this.$style[`button_rounding`]);
+        if (typeof this.rounding === "string") {
+          classList.push(this.$style[`button_rounding_${this.rounding}`]);
         }
       }
       if (this.$attrs.class) {
-        classList.push(this.$attrs.class)
+        classList.push(this.$attrs.class);
       }
-      
-      return classList
+
+      return classList;
     },
   },
   methods: {
     genTag(): string | DefineComponent {
-      if (this.tag === 'nuxt-link' || this.tag === 'NuxtLink') return NuxtLink
-      return this.tag
+      if (this.tag === "nuxt-link" || this.tag === "NuxtLink") return NuxtLink;
+      return this.tag;
     },
     genData() {
       return {
-        ['data-base-button']: true,
-        class: this.classes
-      }
+        ["data-base-button"]: true,
+        class: this.classes,
+      };
     },
     genContent(tag: string | DefineComponent): Function | VNode {
-      let result = h('span', {
-        class: this.$style.button__content,
-      }, this.$slots)
-      if (typeof tag !== 'string') {
-        return () => result
+      let result = h(
+        "span",
+        {
+          class: this.$style.button__content,
+        },
+        this.$slots
+      );
+      if (typeof tag !== "string") {
+        return () => result;
       }
-      return result
+      return result;
     },
   },
   render(): VNode {
-    let tag = this.genTag()
-    let data = this.genData()
-    let content = this.genContent(tag)
+    let tag = this.genTag();
+    let data = this.genData();
+    let content = this.genContent(tag);
     //TODO: понять почему если передаётся просто название тега - нужно как children передавать функцию, а если передаётся компонент - передавать просто слот
-    return h(tag, data, content)
+    return h(tag, data, content);
   },
-})
+});
 </script>
 
 <style module lang="scss">
@@ -100,12 +118,12 @@ export default defineComponent({
   cursor: pointer;
   transition: background-color 0.2s, border 0.2s;
   text-decoration: none;
-  
+
   &:hover {
     background-color: $primary-700;
     border-color: $primary-700;
   }
-  
+
   &:active {
     background-color: $primary-900;
     border-color: $primary-900;
@@ -134,11 +152,11 @@ export default defineComponent({
   background-color: transparent;
   border: 1px solid $primary;
   color: $primary;
-  
+
   &:hover {
     color: $light;
   }
-  
+
   &:active {
     background-color: $primary-900;
     border: 1px solid $primary-900;
@@ -149,12 +167,12 @@ export default defineComponent({
   background-color: transparent;
   border-color: transparent;
   color: $primary;
-  
+
   &:hover {
     background-color: $primary-50;
     border-color: $primary-50;
   }
-  
+
   &:active {
     background-color: $primary-100;
     border-color: $primary-100;
@@ -170,12 +188,12 @@ export default defineComponent({
   width: $buttonHeight;
   height: $buttonHeight;
   padding: 0;
-  
+
   &.button_size_s {
     width: $buttonHeightS;
     height: $buttonHeightS;
   }
-  
+
   &.button_size_s {
     width: $buttonHeightXs;
     height: $buttonHeightXs;

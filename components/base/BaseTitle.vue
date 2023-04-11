@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: "BaseTitle"
-}
+  name: "BaseTitle",
+};
 </script>
 
 <style module lang="scss">

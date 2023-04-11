@@ -1,123 +1,148 @@
 <template>
-  <Teleport to="#popups" v-if="isOpened">
-    <div class="popup" @click="popupsClickHandler">
-      <slot></slot>
-    </div>
+  <Teleport to="#overlay-wrapper">
+    <Transition name="fade">
+      <div
+        v-if="isOpened"
+        class="popup"
+        v-show="isOpened"
+        @click="popupsClickHandler"
+      >
+        <div class="popup__content">
+          <slot></slot>
+        </div>
+      </div>
+    </Transition>
   </Teleport>
 </template>
 
 <script lang="ts">
-import {useAppStore} from "~/store/app-state";
+import { useAppStore } from "~/store/app-state";
 
 export default defineNuxtComponent({
   name: "BasePopup",
-  emits: [
-    'update:modelValue'
-  ],
+  emits: ["update:modelValue"],
   props: {
     modelValue: {
       type: Boolean,
       default: false,
     },
   },
-  data: ()=>({
+  data: () => ({
     isOpened: false,
   }),
   computed: {
     popupId(): number {
-      return this._.uid
+      return this._.uid;
     },
     appStore() {
-      return useAppStore()
+      return useAppStore();
     },
     popups() {
-      return this.appStore.popups
+      return this.appStore.popups;
     },
     activePopup() {
-      return this.appStore.activePopup
+      return this.appStore.activePopup;
     },
     isActive() {
-      return this.activePopup === this.popupId
+      return this.activePopup === this.popupId;
     },
     popupOpened() {
-      return () => this.appStore.popupOpened(this.popupId)
+      return () => this.appStore.popupOpened(this.popupId);
     },
     popupClosed() {
-      return () => this.appStore.popupClosed(this.popupId)
+      return () => this.appStore.popupClosed(this.popupId);
     },
     closePopup() {
-      return this.appStore.closePopup
+      return this.appStore.closePopup;
     },
   },
   methods: {
     popupsClickHandler(e: Event) {
-      e.stopPropagation()
+      e.stopPropagation();
     },
   },
   beforeUnmount() {
-    this.popupClosed()
+    this.popupClosed();
   },
   watch: {
     popups: {
       handler: function (val) {
         if (this.modelValue) {
-          console.log('val', val)
-          console.log('this.popupId', this.popupId)
           if (!val.includes(this.popupId)) {
-            console.log('delete')
-            this.$emit('update:modelValue', false)
+            this.$emit("update:modelValue", false);
           }
         }
       },
-      deep: true
+      deep: true,
     },
     modelValue: {
       handler: function (val) {
-        this.isOpened = val
-  
+        this.isOpened = val;
+
         if (val) {
-          this.popupOpened()
+          this.popupOpened();
         } else {
-          this.popupClosed()
+          this.popupClosed();
         }
       },
       immediate: true,
     },
   },
-})
+});
 </script>
 
 <style lang="scss">
 .popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 30vw;
-  min-height: 20vh;
-  padding: 2rem;
-  background-color: $light;
-  border-radius: 1rem;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
-  //user-select: none;
   overflow: hidden;
   filter: grayscale(100%);
-  box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+
   &:after {
     position: absolute;
     top: -1px;
     right: -1px;
     bottom: -1px;
     left: -1px;
-    background-color: rgba(0,0,0,0.2);
-    content: '';
+    background-color: rgba(0, 0, 0, 0.2);
+    content: "";
   }
+
   &:last-child {
     pointer-events: all;
     filter: none;
+
     &:after {
       display: none;
     }
   }
+}
+
+.popup__content {
+  min-width: 30vw;
+  min-height: 20vh;
+  padding: 2rem;
+  background-color: $light;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transform-origin: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: scale(0.8);
+  opacity: 0;
 }
 </style>

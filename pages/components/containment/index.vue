@@ -1,5 +1,5 @@
 <template>
-  <BaseTitle> Components</BaseTitle>
+  <BaseTitle>Containment</BaseTitle>
   <CardsList :cards="componentsList"></CardsList>
 </template>
 
@@ -8,27 +8,29 @@ import { defineComponent } from "vue";
 import CardsList from "~/components/CardsList.vue";
 
 export default defineComponent({
-  name: "index",
+  name: "Containment",
   components: {
     CardsList,
   },
   data: () => ({
     componentsList: [
       {
-        title: "Containment",
-        to: "/components/containment",
+        title: "Buttons",
+        to: "/components/containment/buttons",
       },
       {
-        title: "Form elements",
-        to: "/components/form-elements",
+        title: "Cards",
+        to: "/components/containment/cards",
       },
       {
-        title: "Grids",
-        to: "/components/grids",
+        title: "Popups",
+        to: "/components/containment/popups",
+      },
+      {
+        title: "Alerts",
+        to: "/components/containment/alerts",
       },
     ],
   }),
 });
 </script>
-
-<style scoped></style>
